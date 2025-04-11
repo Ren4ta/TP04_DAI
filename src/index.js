@@ -23,11 +23,21 @@ app.get('/saludar/:nombre', (req, res) => {             // EndPoint "/saludar"
     res.status(200).send(`Hola  ${nombre}`);
 
 }) 
-app.get('/validarfecha/:ano/:mes/:dia', (req, res) => {             // EndPoint "/saludar"
-    const ano =req.params.ano;  
+app.get('/validarfecha/:anio/:mes/:dia', (req, res) => {             // EndPoint "/saludar"
+    const anio =req.params.anio;  
     const mes =req.params.mes;  
-    const dia =req.params.dia; 
-   res.status(200)
+    const dia =req.params.dia;  
+    var fechaIng = new Date(anio, mes, dia);  
+    if(Number.isNaN(Date.parse(fechaIng))) 
+    {
+        res.status(400).send(`Fecha Invalida`); 
+    } 
+    else 
+    {      
+        res.status(200).send(`Fecha Valida`)
+
+    }
+   
 
 })
 
