@@ -39,7 +39,8 @@ app.get('/validarfecha/:anio/:mes/:dia', (req, res) => {             // EndPoint
     }
    
 
-})  
+})   
+
 // ENDPOINTS MATEMATICA 
 
 app.get('/matematica/sumar', (req, res) => {             
@@ -84,7 +85,46 @@ app.get('/matematica/dividir', (req, res) => {
 
 })  
 
-// ENDPOINTS OMBD 
+// ENDPOINTS OMBD  
+
+// ENDPOINTS ALUMNOS 
+const alumnosArray = [];
+
+alumnosArray.push(new Alumno("Esteban Dido"  , "22888444", 20));
+
+alumnosArray.push(new Alumno("Matias Queroso", "28946255", 51));
+
+alumnosArray.push(new Alumno("Elba Calao"    , "32623391", 18)); 
+
+app.get('/alumnos', (req, res) => {
+
+    res.status(200).json(alumnosArray);
+  });
+  app.get('/alumnos/:dni', (req, res) => {
+    const dniBuscado = req.params.dni;
+    const alumnoEncontrado = alumnosArray.find(alumno => alumno.dni === dniBuscado);
+  
+    if (alumnoEncontrado) {
+      res.status(200).json(alumnoEncontrado);
+    } else {
+      res.status(404).json({ error: "Alumno no encontrado" });
+    }
+  }); 
+  app.use(express.json());
+  app.post('/alumnos', (req, res) => {                // EndPoint "/"
+
+    const { username, dni, edad } = req.body; 
+    if (!username || !dni || !edad) {
+        return res.status(400).json({ error: "Faltan campos obligatorios" });
+      }
+    
+      const nuevoAlumno = new Alumno(username, dni, edad);
+      alumnosArray.push(nuevoAlumno);
+    
+      res.status(201).json(nuevoAlumno);
+
+
+})
 
 app.get('/', (req, res) => {                // EndPoint "/"
 
