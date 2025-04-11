@@ -17,7 +17,7 @@ app.use(cors());
 
 app.use(express.json()); 
 
-
+// ENDPOINTS COMUNES
 app.get('/saludar/:nombre', (req, res) => {             // EndPoint "/saludar"
     const nombre =req.params.nombre; 
     res.status(200).send(`Hola  ${nombre}`);
@@ -39,7 +39,52 @@ app.get('/validarfecha/:anio/:mes/:dia', (req, res) => {             // EndPoint
     }
    
 
-})
+})  
+// ENDPOINTS MATEMATICA 
+
+app.get('/matematica/sumar', (req, res) => {             
+   
+    const n1 =parseInt(req.query.n1); 
+    const n2 =parseInt(req.query.n2); 
+    const resultado = sumar(n1, n2);
+    res.status(200).send({ resultado });
+
+})  
+app.get('/matematica/restar', (req, res) => {             
+   
+    const n1 =parseInt(req.query.n1); 
+    const n2 =parseInt(req.query.n2); 
+    const resultado = restar(n1, n2);
+    res.status(200).send({ resultado });
+
+})  
+app.get('/matematica/multiplicar', (req, res) => {             
+   
+    const n1 =parseInt(req.query.n1); 
+    const n2 =parseInt(req.query.n2); 
+    const resultado = multiplicar(n1, n2);
+    res.status(200).send({ resultado });
+
+})  
+app.get('/matematica/dividir', (req, res) => {             
+   
+    const n1 =parseInt(req.query.n1); 
+    const n2 =parseInt(req.query.n2); 
+    
+    if(n2 == 0)
+    {
+        res.status(400).send(`El divisor no puede ser 0`);
+    } 
+    else 
+    {
+        const resultado = dividir(n1, n2); 
+        res.status(200).send({ resultado });
+    }
+    
+
+})  
+
+// ENDPOINTS OMBD 
 
 app.get('/', (req, res) => {                // EndPoint "/"
 
